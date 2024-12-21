@@ -39,17 +39,20 @@ def display_equity_curve_section():
         stats = display_trading_statistics()
 
         # Create a clean layout for statistics
+        # Create a clean layout for statistics with dark theme
         for metric, value in stats.items():
             st.markdown(
                 f"""
                 <div style='
                     padding: 10px;
                     margin: 5px 0;
-                    background-color: #f0f2f6;
+                    background-color: #1E1E1E;
+                    border: 1px solid #333;
                     border-radius: 5px;
+                    color: #E0E0E0;
                 '>
-                    <span style='color: #666;'>{metric}:</span>
-                    <span style='float: right; font-weight: bold;'>{value}</span>
+                    <span style='color: #9E9E9E;'>{metric}:</span>
+                    <span style='float: right; font-weight: bold; color: #00C853;'>{value}</span>
                 </div>
                 """,
                 unsafe_allow_html=True,
