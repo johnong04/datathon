@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
-from components import summary_stats, charts, trading_signals
+from components import summary_stats, charts, trading_signals, equity_curve
 
 st.set_page_config(
     page_title="Bitcoin Trading Dashboard", page_icon="📈", layout="wide"
@@ -16,7 +16,7 @@ def load_data():
 
 
 def main():
-    st.title("📊 Bitcoin Trading Dashboard")
+    st.title("🪙 Bitcoin Trading Dashboard")
 
     # Load data
     df = load_data()
@@ -27,10 +27,7 @@ def main():
     max_date = df["time"].max().date()
 
     selected_date = st.sidebar.date_input(
-        "Select Current Date",
-        value=max_date,
-        min_value=min_date,
-        max_value=max_date
+        "Select Current Date", value=max_date, min_value=min_date, max_value=max_date
     )
 
     # Determine the maximum hour based on the selected date
@@ -44,13 +41,13 @@ def main():
         "Select Hour",
         min_value=0,
         max_value=max_hour,
-        value=max_hour if selected_date == max_date else 0
+        value=max_hour if selected_date == max_date else 0,
     )
 
     # Combine selected date and hour to form current_datetime
-    current_datetime = datetime.combine(
-        selected_date, datetime.min.time()
-    ) + timedelta(hours=hour)
+    current_datetime = datetime.combine(selected_date, datetime.min.time()) + timedelta(
+        hours=hour
+    )
 
     # Filter data up to current_datetime
     historical_df = df[df["time"] <= current_datetime]
@@ -97,7 +94,10 @@ def main():
         charts.display_active_addresses_chart(historical_df)
 
     # Display trading signals
-    trading_signals.display_trading_signals(historical_df)
+    # trading_signals.display_trading_signals(historical_df)
+
+    # Display equity curve and trading statistics
+    equity_curve.display_equity_curve_section()
 
 
 if __name__ == "__main__":
